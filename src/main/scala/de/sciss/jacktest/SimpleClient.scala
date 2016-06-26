@@ -35,9 +35,7 @@ object SimpleClient {
     * JACK calls this shutdown_callback if the server ever shuts down or
     * decides to disconnect the client.
     */
-  val jack_shutdown: JackShutdownCallback = { (arg: Ptr[_]) =>
-    exit(1)
-  }
+  def jack_shutdown(arg: Ptr[_]): Unit = exit(1)
 
   def main(args: Array[String]): Unit = {
     val x = jack_client_name_size
@@ -81,7 +79,7 @@ object SimpleClient {
        just decides to stop calling us.
     */
 
-    jack_on_shutdown(client, jack_shutdown, DUMMY)
+    jack_on_shutdown(client, jack_shutdown _, DUMMY)
 
     /* display the current sample rate.
      */
